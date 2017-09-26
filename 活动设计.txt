@@ -36,6 +36,20 @@ CREATE TABLE `tb_activity_stage` (
   `reward_limit_count` bigint(20) unsigned NOT NULL COMMENT '全服限制个数',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='活动档次表';
+
+(3) 活动档次状态表 (已添加)
+CREATE TABLE `tb_sys_activity_stage_state` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '唯一id',
+  `activity_id` bigint(20) unsigned NOT NULL COMMENT '活动id,后台开启活动时确保唯一',
+  `activity_stage_id` bigint(20) unsigned NOT NULL COMMENT '活动档次id,后台开启活动时确保每个活动的档次唯一',
+  `reward_limit_count` bigint(20) unsigned NOT NULL COMMENT '全服限制个数',
+  `reset_time` bigint(20) unsigned NOT NULL COMMENT 'reward_limit_count最后重置的时间戳',
+  `status` tinyint(4) unsigned NOT NULL,
+  `created_date` datetime NOT NULL,
+  `last_modified_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='活动档次状态表';
+
 ```
 
 1. 增加定义 (已添加)
@@ -54,7 +68,7 @@ define.lua
 ```
 activity_condition = {
 	activity_condition_type = 0 -- 条件类型
-	tbl_param = {} -- 条件参数 = {xx, xx, xx}
+	tbl_param = {} -- 条件参数 = {xx, xx, ...}
 }
 ```
 
@@ -169,9 +183,20 @@ sys_activity_stage_state_table = {
 }
 ```
 
-14. db_query_gbm_data 添加 tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
-15. gbm_query_gw_data 添加 tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
-16. 添加 db_sys_activity_stage_state_update
+14. db_query_gbm_data 添加以下字段
+```
+tbl_activity_table = {} -- 详见 netimpl.common.activity_table
+tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_table
+```
+
+
+15. gbm_query_gw_data 添加以下字段
+```
+tbl_activity_table = {} -- 详见 netimpl.common.activity_table
+tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_table
+```
+
+16. 添加 db_sys_activity_stage_state_update (只需要支持单个update即可)
 17. 添加 gwi_sys_activity_stage_state_update
 
 16. 玩家已领取过的活动档次(活动结束时需要删除)
@@ -189,7 +214,7 @@ player_activity_stage_state_table = {
 ```
 player_activity_condition_progress = {
 	activity_condition_type = xx,
-	-- 根据不同的条件进行序列化, 一个条件类型可能有多个进度
+	tbl_progress = {} -- 进度 = {xx, xx, ...}
 }
 ```
 
