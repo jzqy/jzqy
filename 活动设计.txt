@@ -1,3 +1,43 @@
+1. 表结构变更
+```
+(1) 活动表 (已添加)
+CREATE TABLE `tb_activity` (
+  `activity_id` bigint(20) unsigned NOT NULL COMMENT '活动id,后台开启活动时确保唯一',
+  `attend_condition` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '参与条件,冒号分号分隔',
+  `show_condition` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '显示条件,冒号分号分隔(客户端使用)',
+  `platform_id` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '平台id列表,分号分隔(客户端使用)',
+  `show_weight_1` bigint(20) unsigned NOT NULL COMMENT '显示权重1(客户端使用)',
+  `show_weight_2` bigint(20) unsigned NOT NULL COMMENT '显示权重2(客户端使用)',
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '活动名称(客户端使用)',
+  `desc` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '活动信息(客户端使用)',
+  `begin_time` bigint(20) unsigned NOT NULL COMMENT '活动开始时间戳',
+  `end_time` bigint(20) unsigned NOT NULL COMMENT '活动结束时间戳',
+  `get_reward_end_time` bigint(20) unsigned NOT NULL COMMENT '奖励领取结束时间戳',
+  `reward_by_mail` tinyint(4) unsigned NOT NULL COMMENT '奖励是否通过邮件发送奖励',
+  `mail_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '邮件标题',
+  `mail_content` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '邮件内容',
+  `icon_id` bigint(20) unsigned NOT NULL COMMENT '决定客户端显示的图标',
+  `weight` bigint(20) unsigned NOT NULL COMMENT '图标主界面显示的权重',
+  `pos` bigint(20) unsigned NOT NULL COMMENT '图标主界面显示的位置',
+  `status` tinyint(4) unsigned NOT NULL,
+  `created_date` datetime NOT NULL,
+  `last_modified_date` datetime NOT NULL,
+  PRIMARY KEY (`activity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='活动表';
+
+(2) 活动档次表 (已添加)
+CREATE TABLE `tb_activity_stage` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '唯一id',
+  `activity_id` bigint(20) unsigned NOT NULL COMMENT '活动id,后台开启活动时确保唯一',
+  `activity_stage_id` bigint(20) unsigned NOT NULL COMMENT '活动档次id,后台开启活动时确保每个活动的档次唯一',
+  `desc` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '活动档次描述(客户端使用)',
+  `condition` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '达成条件,冒号分号分隔(客户端使用)',
+  `reward` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '奖励,冒号分号分隔(客户端使用)',
+  `reward_limit_count` bigint(20) unsigned NOT NULL COMMENT '全服限制个数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='活动档次表';
+```
+
 1. 增加定义 (已添加)
 define.lua
 ```
@@ -36,7 +76,7 @@ activity_condition_table = {
 -- 活动档次信息
 activity_stage = {
 	activity_stage_id = 0 -- 活动档次id
-	desc = "" -- 客户端显示信息
+	desc = "" -- 客户端活动档次描述信息
 	tbl_condition = {} -- 达成条件, 详见 netimpl.common.activity_condition_table
 	tbl_reward = {} -- 奖励 {reward}, 详见 netimpl.common.reward_table
 	reward_limit_count = 0 -- 全服限制个数
@@ -51,6 +91,13 @@ activity_stage_table = {
 }
 ```
 
+7. 新增结构 platform_id_table, 并修改 netimpl.common.notice 中的 tbl_platform_id
+```
+platform_id_table = {
+	platform_id, platform_id, ...
+}
+```
+
 7. 新增活动结构 - common.netimpl.common.activity.lua (已添加, 其中结构的序列化未改)
 ```
 function protocol.create_response()
@@ -58,10 +105,11 @@ function protocol.create_response()
 	response.activity_id = 0 -- 活动ID
 	response.tbl_attend_condition = {} -- 参与条件, 详见 netimpl.common.activity_condition_table
 	response.tbl_show_condition = {} -- 显示条件(客户端使用), 详见 netimpl.common.activity_condition_table
-	response.tbl_platform = {} -- 平台id列表 = { xx, xx, ... } (客户端使用)
+	response.tbl_platform_id = {} -- 平台id列表(客户端使用), 详见 netimpl.common.platform_id_table
 	response.show_weight_1 = 0 -- 显示权重1(客户端使用)
 	response.show_weight_2 = 0 -- 显示权重2(客户端使用)
 	response.icon_uuid = 0 -- 图标唯一id 
+	response.ui_id = 0 -- 客户端显示的模板id(客户端使用)
 	response.name = "" -- 活动名称(客户端使用)
 	response.desc = "" -- 活动信息(客户端使用)
 	response.begin_time = 0 -- 活动开始时间戳
@@ -120,7 +168,7 @@ sys_activity_stage_state_table = {
 14. db_query_gbm_data 添加 tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
 15. gbm_query_gw_data 添加 tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
 16. 添加 db_sys_activity_stage_state_update
-17. 
+17. 添加 gwi_sys_activity_stage_state_update
 
 16. 玩家已领取过的活动档次(活动结束时需要删除)
 ```
