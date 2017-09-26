@@ -50,6 +50,19 @@ CREATE TABLE `tb_sys_activity_stage_state` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='活动档次状态表';
 
+(4) 玩家活动档次状态表 (已添加)
+CREATE TABLE `tb_player_activity_stage_state` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '唯一id',
+  `activity_id` bigint(20) unsigned NOT NULL COMMENT '活动id,后台开启活动时确保唯一',
+  `activity_stage_id` bigint(20) unsigned NOT NULL COMMENT '活动档次id,后台开启活动时确保每个活动的档次唯一',
+  `progress` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '每个条件的进度,冒号分号分隔',
+  `reward_state` bigint(20) unsigned NOT NULL COMMENT '奖励领取状态',
+  `status` tinyint(4) unsigned NOT NULL,
+  `created_date` datetime NOT NULL,
+  `last_modified_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='玩家活动档次状态表';
+
 ```
 
 1. 增加定义 (已添加)
@@ -57,11 +70,18 @@ define.lua
 ```
 	ACTIVITY_REWARD_NO_LIMIT = 0 -- 表示活动奖励无限制个数
 
+	-- 活动条件
 	ACTIVITY_CONDITION_TYPE = {
 		LEVEL = 1, -- 等级
 		LOGIN_DAYS = 2, -- 累计登录
 		FIRST_CHARGE = 3, -- 首充
-	}
+	},
+
+	-- 活动奖励领取状态
+	ACTIVITY_REWRD_STATE = {
+		NOT_GET = 1, -- 未领取
+		HAVE_GET = 2, -- 已领取
+	},
 ```
 
 2. 增加结构
@@ -189,7 +209,6 @@ tbl_activity_table = {} -- 详见 netimpl.common.activity_table
 tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_table
 ```
 
-
 15. gbm_query_gw_data 添加以下字段
 ```
 tbl_activity_table = {} -- 详见 netimpl.common.activity_table
@@ -199,33 +218,19 @@ tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_t
 16. 添加 db_sys_activity_stage_state_update (只需要支持单个update即可)
 17. 添加 gwi_sys_activity_stage_state_update
 
-16. 玩家已领取过的活动档次(活动结束时需要删除)
+16. 添加结构 玩家活动档次状态 (活动结束时需要删除)
+```
+player_activity_stage_state = {
+	tbl_progress = {} -- 每个条件的进度 = {xx, xx, ...}
+	reward_state = 0 -- 奖励领取状态(已领取/未领取)
+}
+```
+
+16. 添加结构 player_activity_stage_state_table  (活动结束时需要删除)
 ```
 player_activity_stage_state_table = {
 	[activity_id] = {
-		[activity_stage_id] = true,
-		...
-	},
-	...
-}
-```
-
-17. 玩家活动档次单个条件类型的进度
-```
-player_activity_condition_progress = {
-	activity_condition_type = xx,
-	tbl_progress = {} -- 进度 = {xx, xx, ...}
-}
-```
-
-18. 玩家活动档次的进度(活动结束时需要删除)
-```
-player_activity_stage_progress_table = {
-	[activity_id] = {
-		[activity_stage_id] = {
-			[activity_condition_type] = {player_activity_condition_progress},
-			...
-		},
+		[activity_stage_id] = {player_activity_stage_state},
 		...
 	},
 	...
@@ -233,6 +238,7 @@ player_activity_stage_progress_table = {
 ```
 
 19. db_player_online.lua 增加字段 tbl_player_activity_stage_state, 并增加相关读取逻辑
+
 20. 新增协议 db_player_activity_stage_state_update
 
 21. gw_player_online.lua 增加字段
