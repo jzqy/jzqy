@@ -1,0 +1,379 @@
+1. 增加定义 (已添加)
+define.lua
+```
+	ACTIVITY_REWARD_NO_LIMIT = 0 -- 表示活动奖励无限制个数
+
+	ACTIVITY_CONDITION_TYPE = {
+		LEVEL = 1, -- 等级
+		LOGIN_DAYS = 2, -- 累计登录
+		FIRST_CHARGE = 3, -- 首充
+	}
+```
+
+2. 增加结构
+```
+activity_condition = {
+	type = 0,  -- 条件类型
+	... (条件参数) -- TODO
+}
+```
+
+3. 增加结构 activity_condition_table.lua
+```
+activity_condition_table = {
+	[activity_condition_type] = {activity_condition},
+	...
+}
+```
+
+4. 新增文件 server_common.activity_condition_serial
+```
+-- TODO 活动条件数据库的序列化与反序列化, 格式: type:参数1:参数2:参数3:....;
+```
+
+5. 新增结构 activity_stage
+```
+-- 活动档次信息
+activity_stage = {
+	activity_stage_id = 0 -- 活动档次id
+	desc = "" -- 客户端显示信息
+	tbl_condition = {} -- 达成条件, 详见 netimpl.common.activity_condition_table
+	tbl_reward = {} -- 奖励 {reward}, 详见 netimpl.common.reward_table
+	reward_limit_count = 0 -- 全服限制个数
+}
+```
+
+6. 新增结构 activity_stage_table
+```
+activity_stage_table = {
+	[activity_stage_id] = activity_stage,
+	...
+}
+```
+
+7. 新增活动结构 - common.netimpl.common.activity.lua (已添加, 其中结构的序列化未改)
+```
+function protocol.create_response()
+	local response = {}
+	response.activity_id = 0 -- 活动ID
+	response.tbl_attend_condition = {} -- 参与条件, 详见 netimpl.common.activity_condition_table
+	response.tbl_show_condition = {} -- 显示条件(客户端使用), 详见 netimpl.common.activity_condition_table
+	response.tbl_platform = {} -- 平台id列表 = { xx, xx, ... } (客户端使用)
+	response.show_weight_1 = 0 -- 显示权重1(客户端使用)
+	response.show_weight_2 = 0 -- 显示权重2(客户端使用)
+	response.icon_uuid = 0 -- 图标唯一id 
+	response.name = "" -- 活动名称(客户端使用)
+	response.desc = "" -- 活动信息(客户端使用)
+	response.begin_time = 0 -- 活动开始时间戳
+	response.end_time = 0 -- 活动结束时间戳
+	response.get_reward_end_time -- 奖励领取结束时间戳
+	response.tbl_activity_stage = {} -- 详见 netimpl.common.activity_stage_table
+
+	-- 以下字段服务器专用
+	response.reward_by_mail = 0 -- 奖励是否通过邮件发送奖励
+	response.mail_title = "" -- 邮件标题
+	response.mail_content = "" -- 邮件内容
+	-- 图标信息
+	response.icon_id = 0
+	response.weight = 0
+	response.pos = 0
+
+	response.serial = response_serial
+	response.unserial = response_unserial
+	return response
+end
+```
+
+8. 新增结构 common.netimpl.common.activity_table.lua (已添加)
+```
+activity_table = {
+	[activity_id] = {activity},
+	...
+}
+```
+
+9. 添加协议 db_activity_update
+
+10. 添加协议 gwi_activity_update
+
+11. 添加协议 gbm_activity_update
+
+12. 新增结构 sys_activity_stage_state (活动结束需要删除)
+```
+sys_activity_stage_state = {
+	reward_limit_count = 0, -- 全服已经领取过奖励的人数
+	reset_time = 0, -- 最后重置时间戳
+}
+```
+
+13. 活动档次 - 已经领取过此档次奖励的人数 (活动结束需要删除)
+```
+sys_activity_stage_state_table = {
+	[activity_id] = {
+		[activity_stage_id] = {sys_activity_stage_state}
+		...
+	},
+	...
+}
+```
+
+14. db_query_gbm_data 添加 tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
+15. gbm_query_gw_data 添加 tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
+16. 添加 db_sys_activity_stage_state_update
+17. 
+
+16. 玩家已领取过的活动档次(活动结束时需要删除)
+```
+player_activity_stage_state_table = {
+	[activity_id] = {
+		[activity_stage_id] = true,
+		...
+	},
+	...
+}
+```
+
+17. 玩家活动档次单个条件类型的进度
+```
+player_activity_condition_progress = {
+	activity_condition_type = xx,
+	-- 根据不同的条件进行序列化, 一个条件类型可能有多个进度
+}
+```
+
+18. 玩家活动档次的进度(活动结束时需要删除)
+```
+player_activity_stage_progress_table = {
+	[activity_id] = {
+		[activity_stage_id] = {
+			[activity_condition_type] = {player_activity_condition_progress},
+			...
+		},
+		...
+	},
+	...
+}
+```
+
+19. db_player_online.lua 增加字段 tbl_player_activity_stage_state, 并增加相关读取逻辑
+20. 新增协议 db_player_activity_stage_state_update
+
+21. gw_player_online.lua 增加字段
+```
+player.tbl_player_activity_stage_state = dbresp.tbl_player_activity_stage_state
+```
+
+22. gateway添加 activity_mgr.lua
+```
+-- 检查玩家是否已经满足条件
+local function check_condition(self, player, tbl_condition)
+	-- TODO
+end
+
+-- 增加活动档次奖励的领取人数
+local function inc_activity_stage_reward_count(self, activity_id, activity_stage_id)
+	local gbmreq, gbmresp = create_impl("netimpl.globalmgr.gbm_activity_inc_stage_reward_count")
+	gbmreq.activity_id = activity_id
+	gbmreq.activity_stage_id = activity_stage_id
+	daserver.syncCall(NETDEFINE.GBM_ACTIVITY_INC_STAGE_REWARD_COUNT, gbmreq, gbmresp)
+	return gbmresp.retcode
+end
+
+local function init(self, tbl_activity)
+	m.tbl_activity = tbl_activity
+end
+
+local function create()
+	local m = {}
+	m.tbl_activity = {} -- 详见 netimpl.common.activity_table
+
+	m.check_condition = check_condition
+	m.inc_activity_stage_reward_count = inc_activity_stage_reward_count
+
+	return m
+end
+return create
+```
+
+23. gateway.player下新增 activity.lua
+```
+-- 检查玩家是否已经领取过活动档次的奖励
+local function check_player_activity_stage_state(player, activity_id, activity_stage_id)
+	local activity = player.tbl_player_activity_stage_state[activity_id]
+	if not activity then
+		return false
+	end
+
+	if not activity[activity_stage_id] then
+		return false
+	else
+		return true
+	end
+end
+
+-- 更新玩家活动档次奖励的领取状态
+local function update_player_activity_stage_state(player, activity_id, activity_stage_id)
+	player.tbl_player_activity_stage_state[activity_id] = player.tbl_player_activity_stage_state[activity_id] or {}
+	player.tbl_player_activity_stage_state[activity_id][activity_stage_id] = true
+
+	local dbreq, dbresp = create_impl("netimpl.dbmgr.db_activity_player_stage_update")
+	dbreq.activity_id = activity_id
+	dbreq.activity_stage_id = activity_stage_id
+	daserver.syncCall(NETDEFINE.DB_ACTIVITY_PLAYER_STAGE_UPDATE, dbreq, dbresp)
+	if dbresp.retcode ~= ERRCODE.SUCCESS then
+		log_error()
+		return dbresp.retcode
+	else
+		return ERRCODE.SUCCESS
+	end
+end
+
+-- 更新玩家活动进度
+local function update_activity_progress(player, condition_type)
+	local dbreq, dbresp = create_impl("netimpl.dbmgr.db_activity_player_progress_update")
+	dbreq.player_id = player:get_player_id()
+
+	for activity_id, activity in pairs(gateway_global.activity_mgr.tbl_activity) do
+		for activity_stage_id, activity_stage in pairs(activity.tbl_activity_stage) do
+			if activity_stage.tbl_condition[condition_type] then
+				update_condition_progress(condition_type, player, )
+			end
+		end
+	end
+end
+
+local function init(player)
+	player.tbl_player_activity_stage_state = {} -- 详见 netimpl.common.player_activity_stage_state_table
+	player.tbl_player_activity_stage_progress = {} -- 详见 netimpl.common.player_activity_stage_progress_table
+
+	player.check_player_activity_stage_state = check_player_activity_stage_state
+	player.update_player_activity_stage_state = update_player_activity_stage_state
+	player.update_activity_progress = update_activity_progress
+
+	return player
+end
+```
+
+24. gateway.global
+```
+global.activity_mgr = require("gateway.activity_mgr")()
+global.tbl_sys_activity_stage_state = {} -- 详见 netimpl.common.sys_activity_stage_state_table
+```
+
+25. 新增协议 gw_activity_get_reward
+```
+request = {
+	activity_id = xx,
+	activity_stage_id = xx,
+}
+response = {
+	retcode = 0,
+}
+```
+
+```
+local activity_mgr = gateway_global.activity_mgr
+
+-- 判断活动是否存在
+local activity = activity_mgr:get_activity(request.activity_id)
+if not activity then
+	resp.retcode = 
+	daserver.response(current, resp)
+	return
+end
+
+-- 判断是否在活动的时间范围内
+local now = os.time()
+if now < activity.begin_time or now > activity.end_time or now > activity.get_reward_end_time then
+	resp.retcode = 
+	daserver.response(current, resp)
+	return
+end
+
+-- 只有不通过邮件发奖励的活动才可以领取
+if activity.reward_by_mail == DEFINE.FALSE then
+	resp.retcode = 
+	daserver.response(current, resp)
+	return
+end
+
+-- 判断玩家是否满足参与条件
+if not check_condition(player, activity.tbl_attend_condition) then
+	resp.retcode = 
+	daserver.response(current, resp)
+	return
+endl
+
+-- 判断活动档次是否存在
+local activity_stage = activity.tbl_activity_stage[request.activity_stage_id]
+if not activity_stage then
+	resp.retcode = ERRCODE.GWERR_ERROR
+	daserver.response(current, resp)
+	return
+end
+
+-- 判断玩家是否满足活动档次的领取条件
+if not check_condition(player, activity_stage.tbl_condition) then
+	resp.retcode = 
+	daserver.response(current, resp)
+	return
+end
+
+-- 判断玩家是否已经领取过奖励
+if player:check_player_activity_stage_state(request.activity_id, request.activity_stage_id) then
+	resp.retcode = 
+	daserver.response(current, resp)
+	return
+end
+
+local retcode, tbl_real_reward
+
+-- 判断玩家背包是否已满
+retcode, tbl_real_reward = player:check_reward(activity_stage.tbl_reward)
+if retcode ~= ERRCODE.SUCCESS then
+	resp.retcode = 
+	daserver.response(current, resp)
+	return
+end
+
+-- 更新奖励档次的限制个数
+retcode = inc_activity_stage_reward_count(request.activity_id, request.activity_stage_id)
+if retcode ~= ERRCODE.SUCCESS then
+	resp.retcode = retcode
+	daserver.response(current, resp)
+	return
+end
+
+-- 更新玩家的奖励领取状态
+retcode = player:update_player_activity_stage_state(request.activity_id, request.activity_stage_id)
+if retcode ~= ERRCODE.SUCCESS then
+	log_error()
+	resp.retcode = 
+	daserver.response(current, resp)
+	return
+end	
+
+-- 发放奖励
+retcode, tbl_real_reward = player:check_reward(activity_stage.tbl_reward)
+if retcode ~= ERRCODE.SUCCESS then
+	log_error("gw_activity_get_reward|check_reward|retcode(0x%08X)", retcode)
+end
+
+local auto_send_mail = true
+local mail_title = ""
+local mail_content = ""
+retcode = player:dispatch_reward(tbl_real_reward, OPERATION.ACTIVITY, auto_send_mail, mail_title, mail_content)
+if retcode ~= ERRCODE.SUCCESS then
+	log_error("gw_activity_get_reward|dispatch_reward|retcode(0x%08X)", retcode)
+	resp.retcode = retcode
+	daserver.response(current, resp)
+	return
+end
+
+resp.retcode = ERRCODE.SUCCESS
+daserver.response(current, resp)
+return
+
+```
+
+26. 配置表 operation 增加 ACTIVITY 表示活动获得的奖励
