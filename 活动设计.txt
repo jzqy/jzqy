@@ -1,64 +1,64 @@
-1. ±í½á¹¹±ä¸ü
+1. è¡¨ç»“æ„å˜æ›´
 ```
-(1) »î¶¯±í (ÒÑÌí¼Ó)
+(1) æ´»åŠ¨è¡¨ (å·²æ·»åŠ )
 CREATE TABLE `tb_activity` (
-  `activity_id` bigint(20) unsigned NOT NULL COMMENT '»î¶¯id,ºóÌ¨¿ªÆô»î¶¯Ê±È·±£Î¨Ò»',
-  `attend_condition` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '²ÎÓëÌõ¼ş,Ã°ºÅ·ÖºÅ·Ö¸ô',
-  `show_condition` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'ÏÔÊ¾Ìõ¼ş,Ã°ºÅ·ÖºÅ·Ö¸ô(¿Í»§¶ËÊ¹ÓÃ)',
-  `platform_id` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Æ½Ì¨idÁĞ±í,·ÖºÅ·Ö¸ô(¿Í»§¶ËÊ¹ÓÃ)',
-  `show_weight_1` bigint(20) unsigned NOT NULL COMMENT 'ÏÔÊ¾È¨ÖØ1(¿Í»§¶ËÊ¹ÓÃ)',
-  `show_weight_2` bigint(20) unsigned NOT NULL COMMENT 'ÏÔÊ¾È¨ÖØ2(¿Í»§¶ËÊ¹ÓÃ)',
-  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '»î¶¯Ãû³Æ(¿Í»§¶ËÊ¹ÓÃ)',
-  `desc` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '»î¶¯ĞÅÏ¢(¿Í»§¶ËÊ¹ÓÃ)',
-  `begin_time` bigint(20) unsigned NOT NULL COMMENT '»î¶¯¿ªÊ¼Ê±¼ä´Á',
-  `end_time` bigint(20) unsigned NOT NULL COMMENT '»î¶¯½áÊøÊ±¼ä´Á',
-  `get_reward_end_time` bigint(20) unsigned NOT NULL COMMENT '½±ÀøÁìÈ¡½áÊøÊ±¼ä´Á',
-  `reward_by_mail` tinyint(4) unsigned NOT NULL COMMENT '½±ÀøÊÇ·ñÍ¨¹ıÓÊ¼ş·¢ËÍ½±Àø',
-  `mail_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'ÓÊ¼ş±êÌâ',
-  `mail_content` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'ÓÊ¼şÄÚÈİ',
-  `icon_id` bigint(20) unsigned NOT NULL COMMENT '¾ö¶¨¿Í»§¶ËÏÔÊ¾µÄÍ¼±ê',
-  `weight` bigint(20) unsigned NOT NULL COMMENT 'Í¼±êÖ÷½çÃæÏÔÊ¾µÄÈ¨ÖØ',
-  `pos` bigint(20) unsigned NOT NULL COMMENT 'Í¼±êÖ÷½çÃæÏÔÊ¾µÄÎ»ÖÃ',
+  `activity_id` bigint(20) unsigned NOT NULL COMMENT 'æ´»åŠ¨id,åå°å¼€å¯æ´»åŠ¨æ—¶ç¡®ä¿å”¯ä¸€',
+  `attend_condition` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'å‚ä¸æ¡ä»¶,å†’å·åˆ†å·åˆ†éš”',
+  `show_condition` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'æ˜¾ç¤ºæ¡ä»¶,å†’å·åˆ†å·åˆ†éš”(å®¢æˆ·ç«¯ä½¿ç”¨)',
+  `platform_id` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'å¹³å°idåˆ—è¡¨,åˆ†å·åˆ†éš”(å®¢æˆ·ç«¯ä½¿ç”¨)',
+  `show_weight_1` bigint(20) unsigned NOT NULL COMMENT 'æ˜¾ç¤ºæƒé‡1(å®¢æˆ·ç«¯ä½¿ç”¨)',
+  `show_weight_2` bigint(20) unsigned NOT NULL COMMENT 'æ˜¾ç¤ºæƒé‡2(å®¢æˆ·ç«¯ä½¿ç”¨)',
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'æ´»åŠ¨åç§°(å®¢æˆ·ç«¯ä½¿ç”¨)',
+  `desc` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'æ´»åŠ¨ä¿¡æ¯(å®¢æˆ·ç«¯ä½¿ç”¨)',
+  `begin_time` bigint(20) unsigned NOT NULL COMMENT 'æ´»åŠ¨å¼€å§‹æ—¶é—´æˆ³',
+  `end_time` bigint(20) unsigned NOT NULL COMMENT 'æ´»åŠ¨ç»“æŸæ—¶é—´æˆ³',
+  `get_reward_end_time` bigint(20) unsigned NOT NULL COMMENT 'å¥–åŠ±é¢†å–ç»“æŸæ—¶é—´æˆ³',
+  `reward_by_mail` tinyint(4) unsigned NOT NULL COMMENT 'å¥–åŠ±æ˜¯å¦é€šè¿‡é‚®ä»¶å‘é€å¥–åŠ±',
+  `mail_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'é‚®ä»¶æ ‡é¢˜',
+  `mail_content` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'é‚®ä»¶å†…å®¹',
+  `icon_id` bigint(20) unsigned NOT NULL COMMENT 'å†³å®šå®¢æˆ·ç«¯æ˜¾ç¤ºçš„å›¾æ ‡',
+  `weight` bigint(20) unsigned NOT NULL COMMENT 'å›¾æ ‡ä¸»ç•Œé¢æ˜¾ç¤ºçš„æƒé‡',
+  `pos` bigint(20) unsigned NOT NULL COMMENT 'å›¾æ ‡ä¸»ç•Œé¢æ˜¾ç¤ºçš„ä½ç½®',
   `status` tinyint(4) unsigned NOT NULL,
   `created_date` datetime NOT NULL,
   `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`activity_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='»î¶¯±í';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='æ´»åŠ¨è¡¨';
 
-(2) »î¶¯µµ´Î±í (ÒÑÌí¼Ó)
+(2) æ´»åŠ¨æ¡£æ¬¡è¡¨ (å·²æ·»åŠ )
 CREATE TABLE `tb_activity_stage` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Î¨Ò»id',
-  `activity_id` bigint(20) unsigned NOT NULL COMMENT '»î¶¯id,ºóÌ¨¿ªÆô»î¶¯Ê±È·±£Î¨Ò»',
-  `activity_stage_id` bigint(20) unsigned NOT NULL COMMENT '»î¶¯µµ´Îid,ºóÌ¨¿ªÆô»î¶¯Ê±È·±£Ã¿¸ö»î¶¯µÄµµ´ÎÎ¨Ò»',
-  `desc` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '»î¶¯µµ´ÎÃèÊö(¿Í»§¶ËÊ¹ÓÃ)',
-  `condition` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '´ï³ÉÌõ¼ş,Ã°ºÅ·ÖºÅ·Ö¸ô(¿Í»§¶ËÊ¹ÓÃ)',
-  `reward` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '½±Àø,Ã°ºÅ·ÖºÅ·Ö¸ô(¿Í»§¶ËÊ¹ÓÃ)',
-  `reward_limit_count` bigint(20) unsigned NOT NULL COMMENT 'È«·şÏŞÖÆ¸öÊı',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'å”¯ä¸€id',
+  `activity_id` bigint(20) unsigned NOT NULL COMMENT 'æ´»åŠ¨id,åå°å¼€å¯æ´»åŠ¨æ—¶ç¡®ä¿å”¯ä¸€',
+  `activity_stage_id` bigint(20) unsigned NOT NULL COMMENT 'æ´»åŠ¨æ¡£æ¬¡id,åå°å¼€å¯æ´»åŠ¨æ—¶ç¡®ä¿æ¯ä¸ªæ´»åŠ¨çš„æ¡£æ¬¡å”¯ä¸€',
+  `desc` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'æ´»åŠ¨æ¡£æ¬¡æè¿°(å®¢æˆ·ç«¯ä½¿ç”¨)',
+  `condition` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'è¾¾æˆæ¡ä»¶,å†’å·åˆ†å·åˆ†éš”(å®¢æˆ·ç«¯ä½¿ç”¨)',
+  `reward` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT 'å¥–åŠ±,å†’å·åˆ†å·åˆ†éš”(å®¢æˆ·ç«¯ä½¿ç”¨)',
+  `reward_limit_count` bigint(20) unsigned NOT NULL COMMENT 'å…¨æœé™åˆ¶ä¸ªæ•°',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='»î¶¯µµ´Î±í';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='æ´»åŠ¨æ¡£æ¬¡è¡¨';
 ```
 
-1. Ôö¼Ó¶¨Òå (ÒÑÌí¼Ó)
+1. å¢åŠ å®šä¹‰ (å·²æ·»åŠ )
 define.lua
 ```
-	ACTIVITY_REWARD_NO_LIMIT = 0 -- ±íÊ¾»î¶¯½±ÀøÎŞÏŞÖÆ¸öÊı
+	ACTIVITY_REWARD_NO_LIMIT = 0 -- è¡¨ç¤ºæ´»åŠ¨å¥–åŠ±æ— é™åˆ¶ä¸ªæ•°
 
 	ACTIVITY_CONDITION_TYPE = {
-		LEVEL = 1, -- µÈ¼¶
-		LOGIN_DAYS = 2, -- ÀÛ¼ÆµÇÂ¼
-		FIRST_CHARGE = 3, -- Ê×³ä
+		LEVEL = 1, -- ç­‰çº§
+		LOGIN_DAYS = 2, -- ç´¯è®¡ç™»å½•
+		FIRST_CHARGE = 3, -- é¦–å……
 	}
 ```
 
-2. Ôö¼Ó½á¹¹
+2. å¢åŠ ç»“æ„
 ```
 activity_condition = {
-	type = 0,  -- Ìõ¼şÀàĞÍ
-	... (Ìõ¼ş²ÎÊı) -- TODO
+	type = 0,  -- æ¡ä»¶ç±»å‹
+	... (æ¡ä»¶å‚æ•°) -- TODO
 }
 ```
 
-3. Ôö¼Ó½á¹¹ activity_condition_table.lua
+3. å¢åŠ ç»“æ„ activity_condition_table.lua
 ```
 activity_condition_table = {
 	[activity_condition_type] = {activity_condition},
@@ -66,24 +66,24 @@ activity_condition_table = {
 }
 ```
 
-4. ĞÂÔöÎÄ¼ş server_common.activity_condition_serial
+4. æ–°å¢æ–‡ä»¶ server_common.activity_condition_serial
 ```
--- TODO »î¶¯Ìõ¼şÊı¾İ¿âµÄĞòÁĞ»¯Óë·´ĞòÁĞ»¯, ¸ñÊ½: type:²ÎÊı1:²ÎÊı2:²ÎÊı3:....;
+-- TODO æ´»åŠ¨æ¡ä»¶æ•°æ®åº“çš„åºåˆ—åŒ–ä¸ååºåˆ—åŒ–, æ ¼å¼: type:å‚æ•°1:å‚æ•°2:å‚æ•°3:....;
 ```
 
-5. ĞÂÔö½á¹¹ activity_stage
+5. æ–°å¢ç»“æ„ activity_stage
 ```
--- »î¶¯µµ´ÎĞÅÏ¢
+-- æ´»åŠ¨æ¡£æ¬¡ä¿¡æ¯
 activity_stage = {
-	activity_stage_id = 0 -- »î¶¯µµ´Îid
-	desc = "" -- ¿Í»§¶Ë»î¶¯µµ´ÎÃèÊöĞÅÏ¢
-	tbl_condition = {} -- ´ï³ÉÌõ¼ş, Ïê¼û netimpl.common.activity_condition_table
-	tbl_reward = {} -- ½±Àø {reward}, Ïê¼û netimpl.common.reward_table
-	reward_limit_count = 0 -- È«·şÏŞÖÆ¸öÊı
+	activity_stage_id = 0 -- æ´»åŠ¨æ¡£æ¬¡id
+	desc = "" -- å®¢æˆ·ç«¯æ´»åŠ¨æ¡£æ¬¡æè¿°ä¿¡æ¯
+	tbl_condition = {} -- è¾¾æˆæ¡ä»¶, è¯¦è§ netimpl.common.activity_condition_table
+	tbl_reward = {} -- å¥–åŠ± {reward}, è¯¦è§ netimpl.common.reward_table
+	reward_limit_count = 0 -- å…¨æœé™åˆ¶ä¸ªæ•°
 }
 ```
 
-6. ĞÂÔö½á¹¹ activity_stage_table
+6. æ–°å¢ç»“æ„ activity_stage_table
 ```
 activity_stage_table = {
 	[activity_stage_id] = activity_stage,
@@ -91,37 +91,37 @@ activity_stage_table = {
 }
 ```
 
-7. ĞÂÔö½á¹¹ platform_id_table, ²¢ĞŞ¸Ä netimpl.common.notice ÖĞµÄ tbl_platform_id
+7. æ–°å¢ç»“æ„ platform_id_table, å¹¶ä¿®æ”¹ netimpl.common.notice ä¸­çš„ tbl_platform_id
 ```
 platform_id_table = {
 	platform_id, platform_id, ...
 }
 ```
 
-7. ĞÂÔö»î¶¯½á¹¹ - common.netimpl.common.activity.lua (ÒÑÌí¼Ó, ÆäÖĞ½á¹¹µÄĞòÁĞ»¯Î´¸Ä)
+7. æ–°å¢æ´»åŠ¨ç»“æ„ - common.netimpl.common.activity.lua (å·²æ·»åŠ , å…¶ä¸­ç»“æ„çš„åºåˆ—åŒ–æœªæ”¹)
 ```
 function protocol.create_response()
 	local response = {}
-	response.activity_id = 0 -- »î¶¯ID
-	response.tbl_attend_condition = {} -- ²ÎÓëÌõ¼ş, Ïê¼û netimpl.common.activity_condition_table
-	response.tbl_show_condition = {} -- ÏÔÊ¾Ìõ¼ş(¿Í»§¶ËÊ¹ÓÃ), Ïê¼û netimpl.common.activity_condition_table
-	response.tbl_platform_id = {} -- Æ½Ì¨idÁĞ±í(¿Í»§¶ËÊ¹ÓÃ), Ïê¼û netimpl.common.platform_id_table
-	response.show_weight_1 = 0 -- ÏÔÊ¾È¨ÖØ1(¿Í»§¶ËÊ¹ÓÃ)
-	response.show_weight_2 = 0 -- ÏÔÊ¾È¨ÖØ2(¿Í»§¶ËÊ¹ÓÃ)
-	response.icon_uuid = 0 -- Í¼±êÎ¨Ò»id 
-	response.ui_id = 0 -- ¿Í»§¶ËÏÔÊ¾µÄÄ£°åid(¿Í»§¶ËÊ¹ÓÃ)
-	response.name = "" -- »î¶¯Ãû³Æ(¿Í»§¶ËÊ¹ÓÃ)
-	response.desc = "" -- »î¶¯ĞÅÏ¢(¿Í»§¶ËÊ¹ÓÃ)
-	response.begin_time = 0 -- »î¶¯¿ªÊ¼Ê±¼ä´Á
-	response.end_time = 0 -- »î¶¯½áÊøÊ±¼ä´Á
-	response.get_reward_end_time -- ½±ÀøÁìÈ¡½áÊøÊ±¼ä´Á
-	response.tbl_activity_stage = {} -- Ïê¼û netimpl.common.activity_stage_table
+	response.activity_id = 0 -- æ´»åŠ¨ID
+	response.tbl_attend_condition = {} -- å‚ä¸æ¡ä»¶, è¯¦è§ netimpl.common.activity_condition_table
+	response.tbl_show_condition = {} -- æ˜¾ç¤ºæ¡ä»¶(å®¢æˆ·ç«¯ä½¿ç”¨), è¯¦è§ netimpl.common.activity_condition_table
+	response.tbl_platform_id = {} -- å¹³å°idåˆ—è¡¨(å®¢æˆ·ç«¯ä½¿ç”¨), è¯¦è§ netimpl.common.platform_id_table
+	response.show_weight_1 = 0 -- æ˜¾ç¤ºæƒé‡1(å®¢æˆ·ç«¯ä½¿ç”¨)
+	response.show_weight_2 = 0 -- æ˜¾ç¤ºæƒé‡2(å®¢æˆ·ç«¯ä½¿ç”¨)
+	response.icon_uuid = 0 -- å›¾æ ‡å”¯ä¸€id 
+	response.ui_id = 0 -- å®¢æˆ·ç«¯æ˜¾ç¤ºçš„æ¨¡æ¿id(å®¢æˆ·ç«¯ä½¿ç”¨)
+	response.name = "" -- æ´»åŠ¨åç§°(å®¢æˆ·ç«¯ä½¿ç”¨)
+	response.desc = "" -- æ´»åŠ¨ä¿¡æ¯(å®¢æˆ·ç«¯ä½¿ç”¨)
+	response.begin_time = 0 -- æ´»åŠ¨å¼€å§‹æ—¶é—´æˆ³
+	response.end_time = 0 -- æ´»åŠ¨ç»“æŸæ—¶é—´æˆ³
+	response.get_reward_end_time -- å¥–åŠ±é¢†å–ç»“æŸæ—¶é—´æˆ³
+	response.tbl_activity_stage = {} -- è¯¦è§ netimpl.common.activity_stage_table
 
-	-- ÒÔÏÂ×Ö¶Î·şÎñÆ÷×¨ÓÃ
-	response.reward_by_mail = 0 -- ½±ÀøÊÇ·ñÍ¨¹ıÓÊ¼ş·¢ËÍ½±Àø
-	response.mail_title = "" -- ÓÊ¼ş±êÌâ
-	response.mail_content = "" -- ÓÊ¼şÄÚÈİ
-	-- Í¼±êĞÅÏ¢
+	-- ä»¥ä¸‹å­—æ®µæœåŠ¡å™¨ä¸“ç”¨
+	response.reward_by_mail = 0 -- å¥–åŠ±æ˜¯å¦é€šè¿‡é‚®ä»¶å‘é€å¥–åŠ±
+	response.mail_title = "" -- é‚®ä»¶æ ‡é¢˜
+	response.mail_content = "" -- é‚®ä»¶å†…å®¹
+	-- å›¾æ ‡ä¿¡æ¯
 	response.icon_id = 0
 	response.weight = 0
 	response.pos = 0
@@ -132,7 +132,7 @@ function protocol.create_response()
 end
 ```
 
-8. ĞÂÔö½á¹¹ common.netimpl.common.activity_table.lua (ÒÑÌí¼Ó)
+8. æ–°å¢ç»“æ„ common.netimpl.common.activity_table.lua (å·²æ·»åŠ )
 ```
 activity_table = {
 	[activity_id] = {activity},
@@ -140,21 +140,21 @@ activity_table = {
 }
 ```
 
-9. Ìí¼ÓĞ­Òé db_activity_update
+9. æ·»åŠ åè®® db_activity_update
 
-10. Ìí¼ÓĞ­Òé gwi_activity_update
+10. æ·»åŠ åè®® gwi_activity_update
 
-11. Ìí¼ÓĞ­Òé gbm_activity_update
+11. æ·»åŠ åè®® gbm_activity_update
 
-12. ĞÂÔö½á¹¹ sys_activity_stage_state (»î¶¯½áÊøĞèÒªÉ¾³ı)
+12. æ–°å¢ç»“æ„ sys_activity_stage_state (æ´»åŠ¨ç»“æŸéœ€è¦åˆ é™¤)
 ```
 sys_activity_stage_state = {
-	reward_limit_count = 0, -- È«·şÒÑ¾­ÁìÈ¡¹ı½±ÀøµÄÈËÊı
-	reset_time = 0, -- ×îºóÖØÖÃÊ±¼ä´Á
+	reward_limit_count = 0, -- å…¨æœå·²ç»é¢†å–è¿‡å¥–åŠ±çš„äººæ•°
+	reset_time = 0, -- æœ€åé‡ç½®æ—¶é—´æˆ³
 }
 ```
 
-13. »î¶¯µµ´Î - ÒÑ¾­ÁìÈ¡¹ı´Ëµµ´Î½±ÀøµÄÈËÊı (»î¶¯½áÊøĞèÒªÉ¾³ı)
+13. æ´»åŠ¨æ¡£æ¬¡ - å·²ç»é¢†å–è¿‡æ­¤æ¡£æ¬¡å¥–åŠ±çš„äººæ•° (æ´»åŠ¨ç»“æŸéœ€è¦åˆ é™¤)
 ```
 sys_activity_stage_state_table = {
 	[activity_id] = {
@@ -165,12 +165,12 @@ sys_activity_stage_state_table = {
 }
 ```
 
-14. db_query_gbm_data Ìí¼Ó tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
-15. gbm_query_gw_data Ìí¼Ó tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
-16. Ìí¼Ó db_sys_activity_stage_state_update
-17. Ìí¼Ó gwi_sys_activity_stage_state_update
+14. db_query_gbm_data æ·»åŠ  tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
+15. gbm_query_gw_data æ·»åŠ  tbl_sys_activity_stage_state -- = {sys_activity_stage_state_table}
+16. æ·»åŠ  db_sys_activity_stage_state_update
+17. æ·»åŠ  gwi_sys_activity_stage_state_update
 
-16. Íæ¼ÒÒÑÁìÈ¡¹ıµÄ»î¶¯µµ´Î(»î¶¯½áÊøÊ±ĞèÒªÉ¾³ı)
+16. ç©å®¶å·²é¢†å–è¿‡çš„æ´»åŠ¨æ¡£æ¬¡(æ´»åŠ¨ç»“æŸæ—¶éœ€è¦åˆ é™¤)
 ```
 player_activity_stage_state_table = {
 	[activity_id] = {
@@ -181,15 +181,15 @@ player_activity_stage_state_table = {
 }
 ```
 
-17. Íæ¼Ò»î¶¯µµ´Îµ¥¸öÌõ¼şÀàĞÍµÄ½ø¶È
+17. ç©å®¶æ´»åŠ¨æ¡£æ¬¡å•ä¸ªæ¡ä»¶ç±»å‹çš„è¿›åº¦
 ```
 player_activity_condition_progress = {
 	activity_condition_type = xx,
-	-- ¸ù¾İ²»Í¬µÄÌõ¼ş½øĞĞĞòÁĞ»¯, Ò»¸öÌõ¼şÀàĞÍ¿ÉÄÜÓĞ¶à¸ö½ø¶È
+	-- æ ¹æ®ä¸åŒçš„æ¡ä»¶è¿›è¡Œåºåˆ—åŒ–, ä¸€ä¸ªæ¡ä»¶ç±»å‹å¯èƒ½æœ‰å¤šä¸ªè¿›åº¦
 }
 ```
 
-18. Íæ¼Ò»î¶¯µµ´ÎµÄ½ø¶È(»î¶¯½áÊøÊ±ĞèÒªÉ¾³ı)
+18. ç©å®¶æ´»åŠ¨æ¡£æ¬¡çš„è¿›åº¦(æ´»åŠ¨ç»“æŸæ—¶éœ€è¦åˆ é™¤)
 ```
 player_activity_stage_progress_table = {
 	[activity_id] = {
@@ -203,22 +203,22 @@ player_activity_stage_progress_table = {
 }
 ```
 
-19. db_player_online.lua Ôö¼Ó×Ö¶Î tbl_player_activity_stage_state, ²¢Ôö¼ÓÏà¹Ø¶ÁÈ¡Âß¼­
-20. ĞÂÔöĞ­Òé db_player_activity_stage_state_update
+19. db_player_online.lua å¢åŠ å­—æ®µ tbl_player_activity_stage_state, å¹¶å¢åŠ ç›¸å…³è¯»å–é€»è¾‘
+20. æ–°å¢åè®® db_player_activity_stage_state_update
 
-21. gw_player_online.lua Ôö¼Ó×Ö¶Î
+21. gw_player_online.lua å¢åŠ å­—æ®µ
 ```
 player.tbl_player_activity_stage_state = dbresp.tbl_player_activity_stage_state
 ```
 
-22. gatewayÌí¼Ó activity_mgr.lua
+22. gatewayæ·»åŠ  activity_mgr.lua
 ```
--- ¼ì²éÍæ¼ÒÊÇ·ñÒÑ¾­Âú×ãÌõ¼ş
+-- æ£€æŸ¥ç©å®¶æ˜¯å¦å·²ç»æ»¡è¶³æ¡ä»¶
 local function check_condition(self, player, tbl_condition)
 	-- TODO
 end
 
--- Ôö¼Ó»î¶¯µµ´Î½±ÀøµÄÁìÈ¡ÈËÊı
+-- å¢åŠ æ´»åŠ¨æ¡£æ¬¡å¥–åŠ±çš„é¢†å–äººæ•°
 local function inc_activity_stage_reward_count(self, activity_id, activity_stage_id)
 	local gbmreq, gbmresp = create_impl("netimpl.globalmgr.gbm_activity_inc_stage_reward_count")
 	gbmreq.activity_id = activity_id
@@ -233,7 +233,7 @@ end
 
 local function create()
 	local m = {}
-	m.tbl_activity = {} -- Ïê¼û netimpl.common.activity_table
+	m.tbl_activity = {} -- è¯¦è§ netimpl.common.activity_table
 
 	m.check_condition = check_condition
 	m.inc_activity_stage_reward_count = inc_activity_stage_reward_count
@@ -243,9 +243,9 @@ end
 return create
 ```
 
-23. gateway.playerÏÂĞÂÔö activity.lua
+23. gateway.playerä¸‹æ–°å¢ activity.lua
 ```
--- ¼ì²éÍæ¼ÒÊÇ·ñÒÑ¾­ÁìÈ¡¹ı»î¶¯µµ´ÎµÄ½±Àø
+-- æ£€æŸ¥ç©å®¶æ˜¯å¦å·²ç»é¢†å–è¿‡æ´»åŠ¨æ¡£æ¬¡çš„å¥–åŠ±
 local function check_player_activity_stage_state(player, activity_id, activity_stage_id)
 	local activity = player.tbl_player_activity_stage_state[activity_id]
 	if not activity then
@@ -259,7 +259,7 @@ local function check_player_activity_stage_state(player, activity_id, activity_s
 	end
 end
 
--- ¸üĞÂÍæ¼Ò»î¶¯µµ´Î½±ÀøµÄÁìÈ¡×´Ì¬
+-- æ›´æ–°ç©å®¶æ´»åŠ¨æ¡£æ¬¡å¥–åŠ±çš„é¢†å–çŠ¶æ€
 local function update_player_activity_stage_state(player, activity_id, activity_stage_id)
 	player.tbl_player_activity_stage_state[activity_id] = player.tbl_player_activity_stage_state[activity_id] or {}
 	player.tbl_player_activity_stage_state[activity_id][activity_stage_id] = true
@@ -276,7 +276,7 @@ local function update_player_activity_stage_state(player, activity_id, activity_
 	end
 end
 
--- ¸üĞÂÍæ¼Ò»î¶¯½ø¶È
+-- æ›´æ–°ç©å®¶æ´»åŠ¨è¿›åº¦
 local function update_activity_progress(player, condition_type)
 	local dbreq, dbresp = create_impl("netimpl.dbmgr.db_activity_player_progress_update")
 	dbreq.player_id = player:get_player_id()
@@ -291,8 +291,8 @@ local function update_activity_progress(player, condition_type)
 end
 
 local function init(player)
-	player.tbl_player_activity_stage_state = {} -- Ïê¼û netimpl.common.player_activity_stage_state_table
-	player.tbl_player_activity_stage_progress = {} -- Ïê¼û netimpl.common.player_activity_stage_progress_table
+	player.tbl_player_activity_stage_state = {} -- è¯¦è§ netimpl.common.player_activity_stage_state_table
+	player.tbl_player_activity_stage_progress = {} -- è¯¦è§ netimpl.common.player_activity_stage_progress_table
 
 	player.check_player_activity_stage_state = check_player_activity_stage_state
 	player.update_player_activity_stage_state = update_player_activity_stage_state
@@ -305,10 +305,10 @@ end
 24. gateway.global
 ```
 global.activity_mgr = require("gateway.activity_mgr")()
-global.tbl_sys_activity_stage_state = {} -- Ïê¼û netimpl.common.sys_activity_stage_state_table
+global.tbl_sys_activity_stage_state = {} -- è¯¦è§ netimpl.common.sys_activity_stage_state_table
 ```
 
-25. ĞÂÔöĞ­Òé gw_activity_get_reward
+25. æ–°å¢åè®® gw_activity_get_reward
 ```
 request = {
 	activity_id = xx,
@@ -322,7 +322,7 @@ response = {
 ```
 local activity_mgr = gateway_global.activity_mgr
 
--- ÅĞ¶Ï»î¶¯ÊÇ·ñ´æÔÚ
+-- åˆ¤æ–­æ´»åŠ¨æ˜¯å¦å­˜åœ¨
 local activity = activity_mgr:get_activity(request.activity_id)
 if not activity then
 	resp.retcode = 
@@ -330,7 +330,7 @@ if not activity then
 	return
 end
 
--- ÅĞ¶ÏÊÇ·ñÔÚ»î¶¯µÄÊ±¼ä·¶Î§ÄÚ
+-- åˆ¤æ–­æ˜¯å¦åœ¨æ´»åŠ¨çš„æ—¶é—´èŒƒå›´å†…
 local now = os.time()
 if now < activity.begin_time or now > activity.end_time or now > activity.get_reward_end_time then
 	resp.retcode = 
@@ -338,21 +338,21 @@ if now < activity.begin_time or now > activity.end_time or now > activity.get_re
 	return
 end
 
--- Ö»ÓĞ²»Í¨¹ıÓÊ¼ş·¢½±ÀøµÄ»î¶¯²Å¿ÉÒÔÁìÈ¡
+-- åªæœ‰ä¸é€šè¿‡é‚®ä»¶å‘å¥–åŠ±çš„æ´»åŠ¨æ‰å¯ä»¥é¢†å–
 if activity.reward_by_mail == DEFINE.FALSE then
 	resp.retcode = 
 	daserver.response(current, resp)
 	return
 end
 
--- ÅĞ¶ÏÍæ¼ÒÊÇ·ñÂú×ã²ÎÓëÌõ¼ş
+-- åˆ¤æ–­ç©å®¶æ˜¯å¦æ»¡è¶³å‚ä¸æ¡ä»¶
 if not check_condition(player, activity.tbl_attend_condition) then
 	resp.retcode = 
 	daserver.response(current, resp)
 	return
 endl
 
--- ÅĞ¶Ï»î¶¯µµ´ÎÊÇ·ñ´æÔÚ
+-- åˆ¤æ–­æ´»åŠ¨æ¡£æ¬¡æ˜¯å¦å­˜åœ¨
 local activity_stage = activity.tbl_activity_stage[request.activity_stage_id]
 if not activity_stage then
 	resp.retcode = ERRCODE.GWERR_ERROR
@@ -360,14 +360,14 @@ if not activity_stage then
 	return
 end
 
--- ÅĞ¶ÏÍæ¼ÒÊÇ·ñÂú×ã»î¶¯µµ´ÎµÄÁìÈ¡Ìõ¼ş
+-- åˆ¤æ–­ç©å®¶æ˜¯å¦æ»¡è¶³æ´»åŠ¨æ¡£æ¬¡çš„é¢†å–æ¡ä»¶
 if not check_condition(player, activity_stage.tbl_condition) then
 	resp.retcode = 
 	daserver.response(current, resp)
 	return
 end
 
--- ÅĞ¶ÏÍæ¼ÒÊÇ·ñÒÑ¾­ÁìÈ¡¹ı½±Àø
+-- åˆ¤æ–­ç©å®¶æ˜¯å¦å·²ç»é¢†å–è¿‡å¥–åŠ±
 if player:check_player_activity_stage_state(request.activity_id, request.activity_stage_id) then
 	resp.retcode = 
 	daserver.response(current, resp)
@@ -376,7 +376,7 @@ end
 
 local retcode, tbl_real_reward
 
--- ÅĞ¶ÏÍæ¼Ò±³°üÊÇ·ñÒÑÂú
+-- åˆ¤æ–­ç©å®¶èƒŒåŒ…æ˜¯å¦å·²æ»¡
 retcode, tbl_real_reward = player:check_reward(activity_stage.tbl_reward)
 if retcode ~= ERRCODE.SUCCESS then
 	resp.retcode = 
@@ -384,7 +384,7 @@ if retcode ~= ERRCODE.SUCCESS then
 	return
 end
 
--- ¸üĞÂ½±Àøµµ´ÎµÄÏŞÖÆ¸öÊı
+-- æ›´æ–°å¥–åŠ±æ¡£æ¬¡çš„é™åˆ¶ä¸ªæ•°
 retcode = inc_activity_stage_reward_count(request.activity_id, request.activity_stage_id)
 if retcode ~= ERRCODE.SUCCESS then
 	resp.retcode = retcode
@@ -392,7 +392,7 @@ if retcode ~= ERRCODE.SUCCESS then
 	return
 end
 
--- ¸üĞÂÍæ¼ÒµÄ½±ÀøÁìÈ¡×´Ì¬
+-- æ›´æ–°ç©å®¶çš„å¥–åŠ±é¢†å–çŠ¶æ€
 retcode = player:update_player_activity_stage_state(request.activity_id, request.activity_stage_id)
 if retcode ~= ERRCODE.SUCCESS then
 	log_error()
@@ -401,7 +401,7 @@ if retcode ~= ERRCODE.SUCCESS then
 	return
 end	
 
--- ·¢·Å½±Àø
+-- å‘æ”¾å¥–åŠ±
 retcode, tbl_real_reward = player:check_reward(activity_stage.tbl_reward)
 if retcode ~= ERRCODE.SUCCESS then
 	log_error("gw_activity_get_reward|check_reward|retcode(0x%08X)", retcode)
@@ -424,4 +424,4 @@ return
 
 ```
 
-26. ÅäÖÃ±í operation Ôö¼Ó ACTIVITY ±íÊ¾»î¶¯»ñµÃµÄ½±Àø
+26. é…ç½®è¡¨ operation å¢åŠ  ACTIVITY è¡¨ç¤ºæ´»åŠ¨è·å¾—çš„å¥–åŠ±
