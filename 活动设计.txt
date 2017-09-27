@@ -65,7 +65,7 @@ CREATE TABLE `tb_player_activity_stage_state` (
 
 ```
 
-1. 增加定义 (已添加)
+2. 增加定义 (已添加)
 define.lua
 ```
 	ACTIVITY_REWARD_NO_LIMIT = 0 -- 表示活动奖励无限制个数
@@ -84,7 +84,7 @@ define.lua
 	},
 ```
 
-2. 增加结构 (done)
+3. 增加结构 (done)
 ```
 activity_condition = {
 	activity_condition_type = 0 -- 条件类型
@@ -92,7 +92,7 @@ activity_condition = {
 }
 ```
 
-3. 增加结构 activity_condition_table.lua (done)
+4. 增加结构 activity_condition_table.lua (done)
 ```
 activity_condition_table = {
 	[activity_condition_type] = {activity_condition},
@@ -100,16 +100,16 @@ activity_condition_table = {
 }
 ```
 
-4. 新增文件 server_common.activity_condition_serial
+5. 新增文件 server_common.activity_condition_serial
 ```
 -- 活动条件数据库的序列化与反序列化, 格式: type:参数1:参数2:参数3:....;
 -- eg. 活动条件的序列化如下
 local result = string.format("%s:%s;", condition.type, table.concat(condition.tbl_param, ":"))
 ```
 
-5. 奖励数据库的序列化与反序列化采用已有逻辑 server_common.reward_serial
+6. 奖励数据库的序列化与反序列化采用已有逻辑 server_common.reward_serial
 
-5. 新增结构 activity_stage
+7. 新增结构 activity_stage
 ```
 -- 活动档次信息
 activity_stage = {
@@ -121,7 +121,7 @@ activity_stage = {
 }
 ```
 
-6. 新增结构 activity_stage_table
+8. 新增结构 activity_stage_table
 ```
 activity_stage_table = {
 	[activity_stage_id] = activity_stage,
@@ -129,14 +129,14 @@ activity_stage_table = {
 }
 ```
 
-7. 新增结构 platform_id_table, 并修改 netimpl.common.notice 中的 tbl_platform_id
+9. 新增结构 platform_id_table, 并修改 netimpl.common.notice 中的 tbl_platform_id
 ```
 platform_id_table = {
 	platform_id, platform_id, ...
 }
 ```
 
-7. 新增活动结构 - common.netimpl.common.activity.lua (已添加, 其中结构的序列化未改)
+10. 新增活动结构 - common.netimpl.common.activity.lua (已添加, 其中结构的序列化未改)
 ```
 function protocol.create_response()
 	local response = {}
@@ -170,7 +170,7 @@ function protocol.create_response()
 end
 ```
 
-8. 新增结构 common.netimpl.common.activity_table.lua (已添加)
+11. 新增结构 common.netimpl.common.activity_table.lua (已添加)
 ```
 activity_table = {
 	[activity_id] = {activity},
@@ -178,15 +178,15 @@ activity_table = {
 }
 ```
 
-9. 添加协议 db_activity_update
+12. 添加协议 db_activity_update
 
-10. 添加协议 gwi_activity_update -- ACTIVITY_TODO
+13. 添加协议 gwi_activity_update -- ACTIVITY_TODO
 
-11. 添加协议 gbm_activity_update -- ACTIVITY_TODO
+14. 添加协议 gbm_activity_update -- ACTIVITY_TODO
 
-12. 添加协议 cl_activity_update (已添加)
+15. 添加协议 cl_activity_update (已添加)
 
-12. 新增结构 sys_activity_stage_state (活动结束需要删除)
+16. 新增结构 sys_activity_stage_state (活动结束需要删除)
 ```
 sys_activity_stage_state = {
 	activity_id = 0, -- 活动
@@ -196,7 +196,7 @@ sys_activity_stage_state = {
 }
 ```
 
-13. 活动档次 - 已经领取过此档次奖励的人数 (活动结束需要删除)
+17. 活动档次 - 已经领取过此档次奖励的人数 (活动结束需要删除)
 ```
 sys_activity_stage_state_table = {
 	[activity_id] = {
@@ -207,22 +207,22 @@ sys_activity_stage_state_table = {
 }
 ```
 
-14. db_query_gbm_data 添加以下字段 -- ACTIVITY_TODO
+18. db_query_gbm_data 添加以下字段 -- ACTIVITY_TODO
 ```
 tbl_activity_table = {} -- 详见 netimpl.common.activity_table
 tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_table
 ```
 
-15. gbm_query_gw_data 添加以下字段 -- ACTIVITY_TODO
+19. gbm_query_gw_data 添加以下字段 -- ACTIVITY_TODO
 ```
 tbl_activity_table = {} -- 详见 netimpl.common.activity_table
 tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_table
 ```
 
-16. 添加 db_sys_activity_stage_state_update (只需要支持单个update即可) -- ACTIVITY_TODO
-17. 添加 gwi_sys_activity_stage_state_update -- ACTIVITY_TODO
+20. 添加 db_sys_activity_stage_state_update (只需要支持单个update即可) -- ACTIVITY_TODO
+21. 添加 gwi_sys_activity_stage_state_update -- ACTIVITY_TODO
 
-16. 添加结构 玩家活动档次状态 (活动结束时需要删除)
+22. 添加结构 玩家活动档次状态 (活动结束时需要删除)
 ```
 player_activity_stage_state = {
 	activity_id = 0 -- 活动id
@@ -232,7 +232,7 @@ player_activity_stage_state = {
 }
 ```
 
-16. 添加结构 player_activity_stage_state_table  (活动结束时需要删除)
+23. 添加结构 player_activity_stage_state_table  (活动结束时需要删除)
 ```
 player_activity_stage_state_table = {
 	[activity_id] = {
@@ -243,24 +243,24 @@ player_activity_stage_state_table = {
 }
 ```
 
-19. db_player_online.lua 增加字段 tbl_player_activity_stage_state, 并增加相关读取逻辑 -- ACTIVITY_TODO
+24. db_player_online.lua 增加字段 tbl_player_activity_stage_state, 并增加相关读取逻辑 -- ACTIVITY_TODO
 
-20. 新增协议 db_player_activity_stage_state_update -- ACTIVITY_TODO
+25. 新增协议 db_player_activity_stage_state_update -- ACTIVITY_TODO
 
-21. 新增协议 cl_player_activity_stage_state_update -- ACTIVITY_TODO
+26. 新增协议 cl_player_activity_stage_state_update -- ACTIVITY_TODO
 
-21. gw_player_online.lua 增加代码逻辑
+27. gw_player_online.lua 增加代码逻辑
 ```
 player.tbl_player_activity_stage_state = dbresp.tbl_player_activity_stage_state
 ```
 
-22. gw_player_online.lua 协议增加返回 (已添加)
+28. gw_player_online.lua 协议增加返回 (已添加)
 ```
 tbl_activity -- 活动列表
 tbl_player_activity_stage_state -- 每个活动档次信息
 ```
 
-22. gateway添加 activity_mgr.lua
+29. gateway添加 activity_mgr.lua
 ```
 -- 检查玩家是否已经满足条件
 local function check_condition(self, player, tbl_condition)
@@ -292,7 +292,7 @@ end
 return create
 ```
 
-23. gateway.player下新增 activity.lua
+30. gateway.player下新增 activity.lua
 ```
 -- 检查玩家是否已经领取过活动档次的奖励
 local function check_player_activity_stage_state(player, activity_id, activity_stage_id)
@@ -351,13 +351,13 @@ local function init(player)
 end
 ```
 
-24. gateway.global
+31. gateway.global
 ```
 global.activity_mgr = require("gateway.activity_mgr")()
 global.tbl_sys_activity_stage_state = {} -- 详见 netimpl.common.sys_activity_stage_state_table
 ```
 
-25. 新增协议 gw_activity_get_reward
+32. 新增协议 gw_activity_get_reward
 ```
 request = {
 	activity_id = xx,
@@ -473,4 +473,4 @@ return
 
 ```
 
-26. 配置表 operation 增加 ACTIVITY 表示活动获得的奖励
+33. 配置表 operation 增加 ACTIVITY 表示活动获得的奖励
