@@ -53,6 +53,7 @@ CREATE TABLE `tb_sys_activity_stage_state` (
 (4) 玩家活动档次状态表 (已添加)
 CREATE TABLE `tb_player_activity_stage_state` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '唯一id',
+  `player_id` bigint(20) unsigned NOT NULL COMMENT '玩家id',
   `activity_id` bigint(20) unsigned NOT NULL COMMENT '活动id,后台开启活动时确保唯一',
   `activity_stage_id` bigint(20) unsigned NOT NULL COMMENT '活动档次id,后台开启活动时确保每个活动的档次唯一',
   `progress` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '每个条件的进度,冒号分号分隔',
@@ -88,7 +89,7 @@ define.lua
 ```
 activity_condition = {
 	activity_condition_type = 0 -- 条件类型
-	tbl_param = {} -- 条件参数 = {xx, xx, ...}
+	tbl_param = {} -- 条件参数 = {array}
 }
 ```
 
@@ -222,12 +223,31 @@ tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_t
 20. 添加 db_sys_activity_stage_state_update (只需要支持单个update即可) -- ACTIVITY_TODO
 21. 添加 gwi_sys_activity_stage_state_update -- ACTIVITY_TODO
 
-22. 添加结构 玩家活动档次状态 (活动结束时需要删除)
+22. 添加结构 player_activity_stage_progress
+```
+player_activity_stage_progress = {
+	[condition_type] = {array},
+	...
+}
+```
+
+22. 添加结构 player_activity_stage_progress_table
+```
+player_activity_stage_progress_table = {
+	[activity_id] = {
+		[activity_stage_id] = {player_activity_stage_progress},
+		...
+	},
+	...
+}
+```
+
+22. 添加结构 玩家活动档次状态 (活动结束时需要删除) 
 ```
 player_activity_stage_state = {
 	activity_id = 0 -- 活动id
 	activity_stage_id = 0 -- 活动档次
-	tbl_progress = {} -- 每个条件的进度 = {xx, xx, ...}
+	tbl_condition_progress = {} -- 每个条件的进度, = {[condition_type] = {array}, ...}
 	reward_state = 0 -- 奖励领取状态(已领取/未领取)
 }
 ```
@@ -245,9 +265,9 @@ player_activity_stage_state_table = {
 
 24. db_player_online.lua 增加字段 tbl_player_activity_stage_state, 并增加相关读取逻辑 -- ACTIVITY_TODO
 
-25. 新增协议 db_player_activity_stage_state_update -- ACTIVITY_TODO
+25. 新增协议 db_player_activity_stage_state_update (支持多条) -- ACTIVITY_TODO
 
-26. 新增协议 cl_player_activity_stage_state_update -- ACTIVITY_TODO
+26. 新增协议 cl_player_activity_stage_state_update (支持多条) -- ACTIVITY_TODO
 
 27. gw_player_online.lua 增加代码逻辑
 ```
@@ -256,8 +276,8 @@ player.tbl_player_activity_stage_state = dbresp.tbl_player_activity_stage_state
 
 28. gw_player_online.lua 协议增加返回 (已添加)
 ```
-tbl_activity -- 活动列表
-tbl_player_activity_stage_state -- 每个活动档次信息
+tbl_activity -- 活动列表(玩家登录时,将gateway本地的缓存返回给客户端)
+tbl_player_activity_stage_state -- 每个活动档次信息(玩家登录查询并返回给客户端)
 ```
 
 29. gateway添加 activity_mgr.lua
@@ -474,3 +494,7 @@ return
 ```
 
 33. 配置表 operation 增加 ACTIVITY 表示活动获得的奖励
+
+34. `avatar_detail_server` 添加 `first_charge_money` (已添加)
+
+35. `first_charge_money` 写 dbmgr 处理 -- ACTIVITY_TODO
