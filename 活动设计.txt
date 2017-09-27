@@ -84,7 +84,7 @@ define.lua
 	},
 ```
 
-2. 增加结构
+2. 增加结构 (done)
 ```
 activity_condition = {
 	activity_condition_type = 0 -- 条件类型
@@ -92,7 +92,7 @@ activity_condition = {
 }
 ```
 
-3. 增加结构 activity_condition_table.lua
+3. 增加结构 activity_condition_table.lua (done)
 ```
 activity_condition_table = {
 	[activity_condition_type] = {activity_condition},
@@ -178,15 +178,19 @@ activity_table = {
 }
 ```
 
-9. 添加协议 db_activity_update -- ACTIVITY_TODO
+9. 添加协议 db_activity_update
 
 10. 添加协议 gwi_activity_update -- ACTIVITY_TODO
 
 11. 添加协议 gbm_activity_update -- ACTIVITY_TODO
 
+12. 添加协议 cl_activity_update (已添加)
+
 12. 新增结构 sys_activity_stage_state (活动结束需要删除)
 ```
 sys_activity_stage_state = {
+	activity_id = 0, -- 活动
+	activity_stage_id = 0, -- 活动档次
 	reward_limit_count = 0, -- 全服已经领取过奖励的人数
 	reset_time = 0, -- 最后重置时间戳
 }
@@ -246,11 +250,10 @@ player_activity_stage_state_table = {
 player.tbl_player_activity_stage_state = dbresp.tbl_player_activity_stage_state
 ```
 
-22. gw_player_online.lua 协议增加返回
+22. gw_player_online.lua 协议增加返回 (已添加)
 ```
 tbl_activity -- 活动列表
-tbl_sys_activity_stage_state
-tbl_player_activity_stage_state -- 每个活动玩家的领取状态
+tbl_player_activity_stage_state -- 每个活动档次信息
 ```
 
 22. gateway添加 activity_mgr.lua
