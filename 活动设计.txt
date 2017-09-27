@@ -178,11 +178,11 @@ activity_table = {
 }
 ```
 
-9. 添加协议 db_activity_update
+9. 添加协议 db_activity_update -- ACTIVITY_TODO
 
-10. 添加协议 gwi_activity_update
+10. 添加协议 gwi_activity_update -- ACTIVITY_TODO
 
-11. 添加协议 gbm_activity_update
+11. 添加协议 gbm_activity_update -- ACTIVITY_TODO
 
 12. 新增结构 sys_activity_stage_state (活动结束需要删除)
 ```
@@ -203,20 +203,20 @@ sys_activity_stage_state_table = {
 }
 ```
 
-14. db_query_gbm_data 添加以下字段
+14. db_query_gbm_data 添加以下字段 -- ACTIVITY_TODO
 ```
 tbl_activity_table = {} -- 详见 netimpl.common.activity_table
 tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_table
 ```
 
-15. gbm_query_gw_data 添加以下字段
+15. gbm_query_gw_data 添加以下字段 -- ACTIVITY_TODO
 ```
 tbl_activity_table = {} -- 详见 netimpl.common.activity_table
 tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_table
 ```
 
-16. 添加 db_sys_activity_stage_state_update (只需要支持单个update即可)
-17. 添加 gwi_sys_activity_stage_state_update
+16. 添加 db_sys_activity_stage_state_update (只需要支持单个update即可) -- ACTIVITY_TODO
+17. 添加 gwi_sys_activity_stage_state_update -- ACTIVITY_TODO
 
 16. 添加结构 玩家活动档次状态 (活动结束时需要删除)
 ```
@@ -237,13 +237,20 @@ player_activity_stage_state_table = {
 }
 ```
 
-19. db_player_online.lua 增加字段 tbl_player_activity_stage_state, 并增加相关读取逻辑
+19. db_player_online.lua 增加字段 tbl_player_activity_stage_state, 并增加相关读取逻辑 -- ACTIVITY_TODO
 
-20. 新增协议 db_player_activity_stage_state_update
+20. 新增协议 db_player_activity_stage_state_update -- ACTIVITY_TODO
 
-21. gw_player_online.lua 增加字段
+21. gw_player_online.lua 增加代码逻辑
 ```
 player.tbl_player_activity_stage_state = dbresp.tbl_player_activity_stage_state
+```
+
+22. gw_player_online.lua 协议增加返回
+```
+tbl_activity -- 活动列表
+tbl_sys_activity_stage_state
+tbl_player_activity_stage_state -- 每个活动玩家的领取状态
 ```
 
 22. gateway添加 activity_mgr.lua
