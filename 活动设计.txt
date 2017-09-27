@@ -225,6 +225,8 @@ tbl_sys_activity_stage_state -- 详见 netimpl.common.sys_activity_stage_state_t
 16. 添加结构 玩家活动档次状态 (活动结束时需要删除)
 ```
 player_activity_stage_state = {
+	activity_id = 0 -- 活动id
+	activity_stage_id = 0 -- 活动档次
 	tbl_progress = {} -- 每个条件的进度 = {xx, xx, ...}
 	reward_state = 0 -- 奖励领取状态(已领取/未领取)
 }
@@ -244,6 +246,8 @@ player_activity_stage_state_table = {
 19. db_player_online.lua 增加字段 tbl_player_activity_stage_state, 并增加相关读取逻辑 -- ACTIVITY_TODO
 
 20. 新增协议 db_player_activity_stage_state_update -- ACTIVITY_TODO
+
+21. 新增协议 cl_player_activity_stage_state_update -- ACTIVITY_TODO
 
 21. gw_player_online.lua 增加代码逻辑
 ```
