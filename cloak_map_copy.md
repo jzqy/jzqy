@@ -6,10 +6,11 @@
 	(3) 按波数配置怪(程序缓存某一波的所有怪, 并按每种怪物个数, 随机生成怪物序列, 定时刷怪时, 直接读取序列)
 
 2. factors 新增配置
-	(1) cloak_map_copy_vertigo 配置【眩晕】花费, 按消耗格式配置
-	(2) cloak_map_copy_refresh_monster_seconds 配置副本每只怪的刷新间隔
-	(3) cloak_map_copy_wave_seconds 前一波怪全部刷完后，需要隔XX秒（配置）才刷下一波怪，如果场景中的怪物被提前杀完，则立即开始刷下一波怪
-	(4) cloak_map_copy_opt_buffer_id 配置眩晕操作给怪物增加的 buffer_id 
+	(1) cloak_map_copy_opt_cost 配置【眩晕】花费, 按消耗格式配置
+	(2) cloak_map_copy_opt_buffer_id 配置【眩晕】操作给怪物增加的 buffer_id 
+	(3) cloak_map_copy_opt_cd_seconds 配置【眩晕】操作的cd秒数
+	(4) cloak_map_copy_refresh_monster_seconds 配置副本每只怪的刷新间隔
+	(5) cloak_map_copy_wave_seconds 前一波怪全部刷完后，需要隔XX秒（配置）才刷下一波怪，如果场景中的怪物被提前杀完，则立即开始刷下一波怪	
 ```
 
 # 开发逻辑修改
