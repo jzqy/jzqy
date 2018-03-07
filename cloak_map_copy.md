@@ -8,7 +8,7 @@
 2. factors 新增配置
 	(1) cloak_map_copy_vertigo 配置【眩晕】花费, 按消耗格式配置
 	(2) cloak_map_copy_refresh_monster_seconds 配置副本每只怪的刷新间隔
-	(3) cloak_map_copy_wave_seconds 配置副本每波的间隔
+	(3) cloak_map_copy_wave_seconds 前一波怪全部刷完后，需要隔XX秒（配置）才刷下一波怪，如果场景中的怪物被提前杀完，则立即开始刷下一波怪
 	(4) cloak_map_copy_opt_buffer_id 配置眩晕操作给怪物增加的 buffer_id 
 ```
 
