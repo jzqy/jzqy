@@ -5,8 +5,8 @@
 
     （2）策划新增配置
 	1.新增表 heart_lock 
-	id | level | exp | attr | lover_attr
-	流水id | 心锁等级 | 升级经验 | 基础属性 | 仙侣加成属性
+	level | exp | attr | lover_attr
+	心锁等级 | 升级经验 | 基础属性 | 仙侣加成属性
 
 	2.factors 新增字段 heart_lock_activate_cost = {cost, exp}
 	3.factors 新增字段 heart_lock_reinforcing_cost = {cost, exp}
